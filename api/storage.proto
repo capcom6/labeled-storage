@@ -27,11 +27,11 @@ message ListResponse {
     repeated Item items = 1;
 }
 
-message PutRequest {
+message ReplaceRequest {
     Item item = 1;
 }
 
-message PutResponse {
+message ReplaceResponse {
     Item item = 1;
 }
 
@@ -48,6 +48,6 @@ message DeleteResponse {
 service Storage {
     rpc Get(GetRequest) returns (GetResponse) {}
     rpc List(ListRequest) returns (ListResponse) {}
-    rpc Put(PutRequest) returns (PutResponse) {}
+    rpc Replace(ReplaceRequest) returns (ReplaceResponse) {}
     rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }

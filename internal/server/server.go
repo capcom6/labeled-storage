@@ -18,7 +18,7 @@ func (s *Server) Get(context.Context, *pb.GetRequest) (*pb.GetResponse, error) {
 func (s *Server) List(context.Context, *pb.ListRequest) (*pb.ListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (s *Server) Put(context.Context, *pb.PutRequest) (*pb.PutResponse, error) {
+func (s *Server) Replace(context.Context, *pb.ReplaceRequest) (*pb.ReplaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Put not implemented")
 }
 func (s *Server) Delete(context.Context, *pb.DeleteRequest) (*pb.DeleteResponse, error) {
