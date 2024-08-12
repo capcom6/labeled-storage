@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option go_package = "github.com/capcom6/labeled-storage/pkg/api";
+
+package storage;
+
+message Item {
+    string key = 1;
+    bytes value = 2;
+
+    map<string, string> labels = 11;
+}
+
+message GetRequest {
+    string key = 1;
+}
+
+message GetResponse {
+    Item item = 1;
+}
+
+message ListRequest {
+    map<string, string> labels = 1;
+}
+
+message ListResponse {
+    repeated Item items = 1;
+}
+
+message PutRequest {
+    Item item = 1;
+}
+
+message PutResponse {
+    Item item = 1;
+}
+
+message DeleteRequest {
+    string key = 1;
+
+    map<string, string> labels = 2;
+}
+
+message DeleteResponse {
+    int64 deleted = 1;
+}
+
+service Storage {
+    rpc Get(GetRequest) returns (GetResponse) {}
+    rpc List(ListRequest) returns (ListResponse) {}
+    rpc Put(PutRequest) returns (PutResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+}
