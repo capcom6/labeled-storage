@@ -7,15 +7,12 @@ GOGET=$(GOCMD) get
 GOGENERATE=$(GOCMD) generate
 BINARY_NAME=server
 
-# Proto file
-PROTO_FILES=$(PROTO_DIR)/*.proto
-
 # Default target executed when no arguments are given to make
 all: build
 
 # Build the project
 build: generate
-	$(GOBUILD) -o $(BINARY_NAME) -v ./...
+	$(GOBUILD) -o $(BINARY_NAME) -v .
 
 # Clean the build cache
 clean:
