@@ -13,7 +13,7 @@ import (
 )
 
 type Server struct {
-	pb.UnimplementedStorageServer
+	pb.UnimplementedStorageServiceServer
 
 	repo repository.Interface
 }

@@ -73,8 +73,8 @@ message DeleteManyResponse {
     uint64 deleted = 1;
 }
 
-// Storage is the service that provides storage operations.
-service Storage {
+// StorageService is the service that provides storage operations.
+service StorageService {
     // Get retrieves the item with the specified key.
     rpc Get(GetRequest) returns (GetResponse) {}
     // Find retrieves items with the specified labels.

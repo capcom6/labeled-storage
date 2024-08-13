@@ -39,7 +39,7 @@ func main() {
 
 	repository := memory.New()
 
-	pb.RegisterStorageServer(grpcServer, server.NewServer(repository))
+	pb.RegisterStorageServiceServer(grpcServer, server.NewServer(repository))
 
 	wg := sync.WaitGroup{}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)

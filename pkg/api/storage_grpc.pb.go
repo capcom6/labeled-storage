@@ -19,19 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Storage_Get_FullMethodName        = "/storage.Storage/Get"
-	Storage_Find_FullMethodName       = "/storage.Storage/Find"
-	Storage_Replace_FullMethodName    = "/storage.Storage/Replace"
-	Storage_DeleteOne_FullMethodName  = "/storage.Storage/DeleteOne"
-	Storage_DeleteMany_FullMethodName = "/storage.Storage/DeleteMany"
+	StorageService_Get_FullMethodName        = "/storage.StorageService/Get"
+	StorageService_Find_FullMethodName       = "/storage.StorageService/Find"
+	StorageService_Replace_FullMethodName    = "/storage.StorageService/Replace"
+	StorageService_DeleteOne_FullMethodName  = "/storage.StorageService/DeleteOne"
+	StorageService_DeleteMany_FullMethodName = "/storage.StorageService/DeleteMany"
 )
 
-// StorageClient is the client API for Storage service.
+// StorageServiceClient is the client API for StorageService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// Storage is the service that provides storage operations.
-type StorageClient interface {
+// StorageService is the service that provides storage operations.
+type StorageServiceClient interface {
 	// Get retrieves the item with the specified key.
 	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 	// Find retrieves items with the specified labels.
@@ -44,70 +44,70 @@ type StorageClient interface {
 	DeleteMany(ctx context.Context, in *DeleteManyRequest, opts ...grpc.CallOption) (*DeleteManyResponse, error)
 }
 
-type storageClient struct {
+type storageServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStorageClient(cc grpc.ClientConnInterface) StorageClient {
-	return &storageClient{cc}
+func NewStorageServiceClient(cc grpc.ClientConnInterface) StorageServiceClient {
+	return &storageServiceClient{cc}
 }
 
-func (c *storageClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+func (c *storageServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, Storage_Get_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, StorageService_Get_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageClient) Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error) {
+func (c *storageServiceClient) Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FindResponse)
-	err := c.cc.Invoke(ctx, Storage_Find_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, StorageService_Find_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageClient) Replace(ctx context.Context, in *ReplaceRequest, opts ...grpc.CallOption) (*ReplaceResponse, error) {
+func (c *storageServiceClient) Replace(ctx context.Context, in *ReplaceRequest, opts ...grpc.CallOption) (*ReplaceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ReplaceResponse)
-	err := c.cc.Invoke(ctx, Storage_Replace_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, StorageService_Replace_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageClient) DeleteOne(ctx context.Context, in *DeleteOneRequest, opts ...grpc.CallOption) (*DeleteOneResponse, error) {
+func (c *storageServiceClient) DeleteOne(ctx context.Context, in *DeleteOneRequest, opts ...grpc.CallOption) (*DeleteOneResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteOneResponse)
-	err := c.cc.Invoke(ctx, Storage_DeleteOne_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, StorageService_DeleteOne_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageClient) DeleteMany(ctx context.Context, in *DeleteManyRequest, opts ...grpc.CallOption) (*DeleteManyResponse, error) {
+func (c *storageServiceClient) DeleteMany(ctx context.Context, in *DeleteManyRequest, opts ...grpc.CallOption) (*DeleteManyResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteManyResponse)
-	err := c.cc.Invoke(ctx, Storage_DeleteMany_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, StorageService_DeleteMany_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// StorageServer is the server API for Storage service.
-// All implementations must embed UnimplementedStorageServer
+// StorageServiceServer is the server API for StorageService service.
+// All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility.
 //
-// Storage is the service that provides storage operations.
-type StorageServer interface {
+// StorageService is the service that provides storage operations.
+type StorageServiceServer interface {
 	// Get retrieves the item with the specified key.
 	Get(context.Context, *GetRequest) (*GetResponse, error)
 	// Find retrieves items with the specified labels.
@@ -118,168 +118,168 @@ type StorageServer interface {
 	DeleteOne(context.Context, *DeleteOneRequest) (*DeleteOneResponse, error)
 	// DeleteMany deletes items with the specified labels.
 	DeleteMany(context.Context, *DeleteManyRequest) (*DeleteManyResponse, error)
-	mustEmbedUnimplementedStorageServer()
+	mustEmbedUnimplementedStorageServiceServer()
 }
 
-// UnimplementedStorageServer must be embedded to have
+// UnimplementedStorageServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedStorageServer struct{}
+type UnimplementedStorageServiceServer struct{}
 
-func (UnimplementedStorageServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+func (UnimplementedStorageServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedStorageServer) Find(context.Context, *FindRequest) (*FindResponse, error) {
+func (UnimplementedStorageServiceServer) Find(context.Context, *FindRequest) (*FindResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
 }
-func (UnimplementedStorageServer) Replace(context.Context, *ReplaceRequest) (*ReplaceResponse, error) {
+func (UnimplementedStorageServiceServer) Replace(context.Context, *ReplaceRequest) (*ReplaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Replace not implemented")
 }
-func (UnimplementedStorageServer) DeleteOne(context.Context, *DeleteOneRequest) (*DeleteOneResponse, error) {
+func (UnimplementedStorageServiceServer) DeleteOne(context.Context, *DeleteOneRequest) (*DeleteOneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOne not implemented")
 }
-func (UnimplementedStorageServer) DeleteMany(context.Context, *DeleteManyRequest) (*DeleteManyResponse, error) {
+func (UnimplementedStorageServiceServer) DeleteMany(context.Context, *DeleteManyRequest) (*DeleteManyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMany not implemented")
 }
-func (UnimplementedStorageServer) mustEmbedUnimplementedStorageServer() {}
-func (UnimplementedStorageServer) testEmbeddedByValue()                 {}
+func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
+func (UnimplementedStorageServiceServer) testEmbeddedByValue()                        {}
 
-// UnsafeStorageServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StorageServer will
+// UnsafeStorageServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StorageServiceServer will
 // result in compilation errors.
-type UnsafeStorageServer interface {
-	mustEmbedUnimplementedStorageServer()
+type UnsafeStorageServiceServer interface {
+	mustEmbedUnimplementedStorageServiceServer()
 }
 
-func RegisterStorageServer(s grpc.ServiceRegistrar, srv StorageServer) {
-	// If the following call pancis, it indicates UnimplementedStorageServer was
+func RegisterStorageServiceServer(s grpc.ServiceRegistrar, srv StorageServiceServer) {
+	// If the following call pancis, it indicates UnimplementedStorageServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Storage_ServiceDesc, srv)
+	s.RegisterService(&StorageService_ServiceDesc, srv)
 }
 
-func _Storage_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).Get(ctx, in)
+		return srv.(StorageServiceServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Storage_Get_FullMethodName,
+		FullMethod: StorageService_Get_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).Get(ctx, req.(*GetRequest))
+		return srv.(StorageServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Storage_Find_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageService_Find_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).Find(ctx, in)
+		return srv.(StorageServiceServer).Find(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Storage_Find_FullMethodName,
+		FullMethod: StorageService_Find_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).Find(ctx, req.(*FindRequest))
+		return srv.(StorageServiceServer).Find(ctx, req.(*FindRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Storage_Replace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageService_Replace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ReplaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).Replace(ctx, in)
+		return srv.(StorageServiceServer).Replace(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Storage_Replace_FullMethodName,
+		FullMethod: StorageService_Replace_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).Replace(ctx, req.(*ReplaceRequest))
+		return srv.(StorageServiceServer).Replace(ctx, req.(*ReplaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Storage_DeleteOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageService_DeleteOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteOneRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).DeleteOne(ctx, in)
+		return srv.(StorageServiceServer).DeleteOne(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Storage_DeleteOne_FullMethodName,
+		FullMethod: StorageService_DeleteOne_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).DeleteOne(ctx, req.(*DeleteOneRequest))
+		return srv.(StorageServiceServer).DeleteOne(ctx, req.(*DeleteOneRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Storage_DeleteMany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageService_DeleteMany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteManyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).DeleteMany(ctx, in)
+		return srv.(StorageServiceServer).DeleteMany(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Storage_DeleteMany_FullMethodName,
+		FullMethod: StorageService_DeleteMany_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).DeleteMany(ctx, req.(*DeleteManyRequest))
+		return srv.(StorageServiceServer).DeleteMany(ctx, req.(*DeleteManyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Storage_ServiceDesc is the grpc.ServiceDesc for Storage service.
+// StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Storage_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "storage.Storage",
-	HandlerType: (*StorageServer)(nil),
+var StorageService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "storage.StorageService",
+	HandlerType: (*StorageServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Get",
-			Handler:    _Storage_Get_Handler,
+			Handler:    _StorageService_Get_Handler,
 		},
 		{
 			MethodName: "Find",
-			Handler:    _Storage_Find_Handler,
+			Handler:    _StorageService_Find_Handler,
 		},
 		{
 			MethodName: "Replace",
-			Handler:    _Storage_Replace_Handler,
+			Handler:    _StorageService_Replace_Handler,
 		},
 		{
 			MethodName: "DeleteOne",
-			Handler:    _Storage_DeleteOne_Handler,
+			Handler:    _StorageService_DeleteOne_Handler,
 		},
 		{
 			MethodName: "DeleteMany",
-			Handler:    _Storage_DeleteMany_Handler,
+			Handler:    _StorageService_DeleteMany_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
