@@ -29,11 +29,18 @@ const (
 // StorageClient is the client API for Storage service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// Storage is the service that provides storage operations.
 type StorageClient interface {
+	// Get retrieves the item with the specified key.
 	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Find retrieves items with the specified labels.
 	Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error)
+	// Replace replaces the item with the specified key.
 	Replace(ctx context.Context, in *ReplaceRequest, opts ...grpc.CallOption) (*ReplaceResponse, error)
+	// DeleteOne deletes the item with the specified key.
 	DeleteOne(ctx context.Context, in *DeleteOneRequest, opts ...grpc.CallOption) (*DeleteOneResponse, error)
+	// DeleteMany deletes items with the specified labels.
 	DeleteMany(ctx context.Context, in *DeleteManyRequest, opts ...grpc.CallOption) (*DeleteManyResponse, error)
 }
 
@@ -98,11 +105,18 @@ func (c *storageClient) DeleteMany(ctx context.Context, in *DeleteManyRequest, o
 // StorageServer is the server API for Storage service.
 // All implementations must embed UnimplementedStorageServer
 // for forward compatibility.
+//
+// Storage is the service that provides storage operations.
 type StorageServer interface {
+	// Get retrieves the item with the specified key.
 	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Find retrieves items with the specified labels.
 	Find(context.Context, *FindRequest) (*FindResponse, error)
+	// Replace replaces the item with the specified key.
 	Replace(context.Context, *ReplaceRequest) (*ReplaceResponse, error)
+	// DeleteOne deletes the item with the specified key.
 	DeleteOne(context.Context, *DeleteOneRequest) (*DeleteOneResponse, error)
+	// DeleteMany deletes items with the specified labels.
 	DeleteMany(context.Context, *DeleteManyRequest) (*DeleteManyResponse, error)
 	mustEmbedUnimplementedStorageServer()
 }

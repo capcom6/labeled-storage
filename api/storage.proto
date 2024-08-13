@@ -4,57 +4,85 @@ option go_package = "github.com/capcom6/labeled-storage/pkg/api";
 
 package storage;
 
+// Item represents a labeled value in the storage.
 message Item {
+    // The key of the item.
     string key = 1;
+    // The value of the item.
     string value = 2;
-
+    // The labels associated with the item.
     map<string, string> labels = 11;
 }
 
+// GetRequest specifies the key of the item to get.
 message GetRequest {
+    // The key of the item to get.
     string key = 1;
 }
 
+// GetResponse contains the item with the specified key.
 message GetResponse {
+    // The item with the specified key.
     Item item = 1;
 }
 
+// FindRequest specifies the labels to search for.
 message FindRequest {
-    map<string, string> labels = 1;
+    // The labels to search for.
+    map<string, string> labels = 11;
 }
 
+// FindResponse contains the items with the specified labels.
 message FindResponse {
-    repeated Item items = 1;
+    // The items with the specified labels.
+    repeated Item items = 21;
 }
 
+// ReplaceRequest specifies the item to replace.
 message ReplaceRequest {
+    // The item to replace.
     Item item = 1;
 }
 
+// ReplaceResponse contains the item that was replaced.
 message ReplaceResponse {
+    // The item that was replaced.
     Item item = 1;
 }
 
+// DeleteOneRequest specifies the key of the item to delete.
 message DeleteOneRequest {
+    // The key of the item to delete.
     string key = 1;
 }
 
+// DeleteOneResponse is empty as there is no response to delete one request.
 message DeleteOneResponse {
-
+    
 }
 
+// DeleteManyRequest specifies the labels to delete items with.
 message DeleteManyRequest {
-    map<string, string> labels = 1;
+    // The labels to delete items with.
+    map<string, string> labels = 11;
 }
 
+// DeleteManyResponse contains the number of items deleted.
 message DeleteManyResponse {
+    // The number of items deleted.
     uint64 deleted = 1;
 }
 
+// Storage is the service that provides storage operations.
 service Storage {
+    // Get retrieves the item with the specified key.
     rpc Get(GetRequest) returns (GetResponse) {}
+    // Find retrieves items with the specified labels.
     rpc Find(FindRequest) returns (FindResponse) {}
+    // Replace replaces the item with the specified key.
     rpc Replace(ReplaceRequest) returns (ReplaceResponse) {}
+    // DeleteOne deletes the item with the specified key.
     rpc DeleteOne(DeleteOneRequest) returns (DeleteOneResponse) {}
+    // DeleteMany deletes items with the specified labels.
     rpc DeleteMany(DeleteManyRequest) returns (DeleteManyResponse) {}
 }

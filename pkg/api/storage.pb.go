@@ -20,13 +20,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Item represents a labeled value in the storage.
 type Item struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Key    string            `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Value  string            `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	// The key of the item.
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// The value of the item.
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	// The labels associated with the item.
 	Labels map[string]string `protobuf:"bytes,11,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -83,11 +87,13 @@ func (x *Item) GetLabels() map[string]string {
 	return nil
 }
 
+// GetRequest specifies the key of the item to get.
 type GetRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The key of the item to get.
 	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 }
 
@@ -130,11 +136,13 @@ func (x *GetRequest) GetKey() string {
 	return ""
 }
 
+// GetResponse contains the item with the specified key.
 type GetResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The item with the specified key.
 	Item *Item `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
 }
 
@@ -177,12 +185,14 @@ func (x *GetResponse) GetItem() *Item {
 	return nil
 }
 
+// FindRequest specifies the labels to search for.
 type FindRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Labels map[string]string `protobuf:"bytes,1,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// The labels to search for.
+	Labels map[string]string `protobuf:"bytes,11,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (x *FindRequest) Reset() {
@@ -224,12 +234,14 @@ func (x *FindRequest) GetLabels() map[string]string {
 	return nil
 }
 
+// FindResponse contains the items with the specified labels.
 type FindResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items []*Item `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	// The items with the specified labels.
+	Items []*Item `protobuf:"bytes,21,rep,name=items,proto3" json:"items,omitempty"`
 }
 
 func (x *FindResponse) Reset() {
@@ -271,11 +283,13 @@ func (x *FindResponse) GetItems() []*Item {
 	return nil
 }
 
+// ReplaceRequest specifies the item to replace.
 type ReplaceRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The item to replace.
 	Item *Item `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
 }
 
@@ -318,11 +332,13 @@ func (x *ReplaceRequest) GetItem() *Item {
 	return nil
 }
 
+// ReplaceResponse contains the item that was replaced.
 type ReplaceResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The item that was replaced.
 	Item *Item `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
 }
 
@@ -365,11 +381,13 @@ func (x *ReplaceResponse) GetItem() *Item {
 	return nil
 }
 
+// DeleteOneRequest specifies the key of the item to delete.
 type DeleteOneRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The key of the item to delete.
 	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 }
 
@@ -412,6 +430,7 @@ func (x *DeleteOneRequest) GetKey() string {
 	return ""
 }
 
+// DeleteOneResponse is empty as there is no response to delete one request.
 type DeleteOneResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -450,12 +469,14 @@ func (*DeleteOneResponse) Descriptor() ([]byte, []int) {
 	return file_api_storage_proto_rawDescGZIP(), []int{8}
 }
 
+// DeleteManyRequest specifies the labels to delete items with.
 type DeleteManyRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Labels map[string]string `protobuf:"bytes,1,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// The labels to delete items with.
+	Labels map[string]string `protobuf:"bytes,11,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (x *DeleteManyRequest) Reset() {
@@ -497,11 +518,13 @@ func (x *DeleteManyRequest) GetLabels() map[string]string {
 	return nil
 }
 
+// DeleteManyResponse contains the number of items deleted.
 type DeleteManyResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The number of items deleted.
 	Deleted uint64 `protobuf:"varint,1,opt,name=deleted,proto3" json:"deleted,omitempty"`
 }
 
@@ -565,7 +588,7 @@ var file_api_storage_proto_rawDesc = []byte{
 	0x65, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61,
 	0x67, 0x65, 0x2e, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x69, 0x74, 0x65, 0x6d, 0x22, 0x82, 0x01,
 	0x0a, 0x0b, 0x46, 0x69, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x38, 0x0a,
-	0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e,
+	0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x0b, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e,
 	0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x46, 0x69, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52,
 	0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x1a, 0x39, 0x0a, 0x0b, 0x4c, 0x61, 0x62, 0x65, 0x6c,
@@ -573,7 +596,7 @@ var file_api_storage_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
 	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02,
 	0x38, 0x01, 0x22, 0x33, 0x0a, 0x0c, 0x46, 0x69, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x23, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x73, 0x65, 0x12, 0x23, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x15, 0x20, 0x03, 0x28,
 	0x0b, 0x32, 0x0d, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x49, 0x74, 0x65, 0x6d,
 	0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x22, 0x33, 0x0a, 0x0e, 0x52, 0x65, 0x70, 0x6c, 0x61,
 	0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x04, 0x69, 0x74, 0x65,
@@ -587,7 +610,7 @@ var file_api_storage_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x13, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65,
 	0x74, 0x65, 0x4f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x8e, 0x01,
 	0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4d, 0x61, 0x6e, 0x79, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x3e, 0x0a, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20,
+	0x65, 0x73, 0x74, 0x12, 0x3e, 0x0a, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x0b, 0x20,
 	0x03, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x44, 0x65,
 	0x6c, 0x65, 0x74, 0x65, 0x4d, 0x61, 0x6e, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e,
 	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x06, 0x6c, 0x61, 0x62,
