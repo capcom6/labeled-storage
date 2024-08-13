@@ -10,7 +10,7 @@ type Item struct {
 	labels map[string]string
 }
 
-func New(value string, labels map[string]string) *Item {
+func NewItem(value string, labels map[string]string) *Item {
 	return &Item{
 		value:  value,
 		labels: labels,
@@ -26,5 +26,25 @@ func (i *Item) Labels() map[string]string {
 }
 
 func (i *Item) String() string {
-	return fmt.Sprintf("key: %s, value: %s, labels: %v", i.value, i.value, i.labels)
+	return fmt.Sprintf("value: %s, labels: %v", i.value, i.labels)
+}
+
+type ItemWithKey struct {
+	key string
+	Item
+}
+
+func NewItemWithKey(key string, value string, labels map[string]string) *ItemWithKey {
+	return &ItemWithKey{
+		key:  key,
+		Item: *NewItem(value, labels),
+	}
+}
+
+func (i *ItemWithKey) Key() string {
+	return i.key
+}
+
+func (i *ItemWithKey) String() string {
+	return fmt.Sprintf("key: %s, value: %s, labels: %v", i.key, i.value, i.labels)
 }

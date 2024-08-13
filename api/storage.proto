@@ -19,11 +19,11 @@ message GetResponse {
     Item item = 1;
 }
 
-message ListRequest {
+message FindRequest {
     map<string, string> labels = 1;
 }
 
-message ListResponse {
+message FindResponse {
     repeated Item items = 1;
 }
 
@@ -35,19 +35,26 @@ message ReplaceResponse {
     Item item = 1;
 }
 
-message DeleteRequest {
+message DeleteOneRequest {
     string key = 1;
-
-    map<string, string> labels = 2;
 }
 
-message DeleteResponse {
-    int64 deleted = 1;
+message DeleteOneResponse {
+
+}
+
+message DeleteManyRequest {
+    map<string, string> labels = 1;
+}
+
+message DeleteManyResponse {
+    uint64 deleted = 1;
 }
 
 service Storage {
     rpc Get(GetRequest) returns (GetResponse) {}
-    rpc List(ListRequest) returns (ListResponse) {}
+    rpc Find(FindRequest) returns (FindResponse) {}
     rpc Replace(ReplaceRequest) returns (ReplaceResponse) {}
-    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+    rpc DeleteOne(DeleteOneRequest) returns (DeleteOneResponse) {}
+    rpc DeleteMany(DeleteManyRequest) returns (DeleteManyResponse) {}
 }

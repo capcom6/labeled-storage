@@ -3,29 +3,43 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net"
 	"os"
 	"os/signal"
 	"sync"
 
+	"github.com/capcom6/labeled-storage/internal/logger"
+	"github.com/capcom6/labeled-storage/internal/repository/memory"
 	"github.com/capcom6/labeled-storage/internal/server"
 	pb "github.com/capcom6/labeled-storage/pkg/api"
+	grpcpkg "github.com/capcom6/labeled-storage/pkg/grpc"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"google.golang.org/grpc"
 )
 
 //go:generate protoc --go_out=pkg --go_opt=paths=source_relative --go-grpc_out=pkg --go-grpc_opt=paths=source_relative api/storage.proto
 
 func main() {
+	log := logger.Default()
+
 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", 9090))
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Error("failed to listen", "error", err)
+		os.Exit(1)
 	}
 
-	opts := []grpc.ServerOption{}
+	opts := []grpc.ServerOption{
+		grpc.ChainUnaryInterceptor(
+			logging.UnaryServerInterceptor(
+				grpcpkg.InterceptorLogger(logger.Default()),
+			),
+		),
+	}
 	grpcServer := grpc.NewServer(opts...)
 
-	pb.RegisterStorageServer(grpcServer, server.NewServer())
+	repository := memory.New()
+
+	pb.RegisterStorageServer(grpcServer, server.NewServer(repository))
 
 	wg := sync.WaitGroup{}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
@@ -36,15 +50,16 @@ func main() {
 		defer wg.Done()
 		<-ctx.Done()
 
-		log.Println("shutting down...")
+		log.Info("shutting down...")
 		grpcServer.GracefulStop()
 	}()
 
-	log.Printf("server listening at %v", lis.Addr())
+	log.Info("server started", "address", lis.Addr())
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Error("failed to serve", "error", err)
+		os.Exit(1)
 	}
 	wg.Wait()
 
-	log.Println("server stopped")
+	log.Info("server stopped")
 }
